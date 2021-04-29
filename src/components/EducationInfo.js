@@ -29,12 +29,7 @@ class EducationInfo extends React.Component {
         this.setState({ dateTo: e.target.value })
     }
 
-    onSubmitEducation = (e) => {
-        e.preventDefault()
-        this.setState({ isEditable: !this.state.isEditable })
-    }
-
-    onEditEducation = (e) => {
+    onUpdateEducation = (e) => {
         e.preventDefault()
         this.setState({ isEditable: !this.state.isEditable })
     }
@@ -45,7 +40,7 @@ class EducationInfo extends React.Component {
                 <h2>{this.state.school}</h2>
                 <h3>{this.state.subject}</h3>
                 <p>{this.state.dateFrom} - {this.state.dateTo}</p>
-                <button onClick={this.onEditEducation}>Edit</button>
+                <button onClick={this.onUpdateEducation}>Edit</button>
 
             </div>
         )
@@ -81,7 +76,7 @@ class EducationInfo extends React.Component {
                     value={this.state.dateTo}
                     onChange={this.handleDateToChange}
                 />
-                <button onClick={this.onSubmitEducation}>Submit</button>
+                <button onClick={this.onUpdateEducation}>Submit</button>
             </div>
         )
     }

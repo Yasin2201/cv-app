@@ -44,15 +44,9 @@ class GeneralInfo extends React.Component {
         })
     }
 
-    onSubmitInfo = (e) => {
+    onUpdateInfo = (e) => {
         e.preventDefault()
         this.setState({ isEditable: !this.state.isEditable })
-    }
-
-    onEditInfo = (e) => {
-        e.preventDefault()
-        this.setState({ isEditable: !this.state.isEditable })
-
     }
 
     renderInfo = () => {
@@ -61,7 +55,7 @@ class GeneralInfo extends React.Component {
                 <h2>{this.state.firstName} {this.state.secondName}</h2>
                 <hr />
                 <h3>{this.state.email} | {this.state.phone} | {this.state.location} </h3>
-                <button onClick={this.onEditInfo}>Edit</button>
+                <button onClick={this.onUpdateInfo}>Edit</button>
             </div>
         )
     }
@@ -103,7 +97,7 @@ class GeneralInfo extends React.Component {
                     value={this.state.location}
                     onChange={this.handleLocationChange}
                 />
-                <button onClick={this.onSubmitInfo}>Submit</button>
+                <button onClick={this.onUpdateInfo}>Submit</button>
             </div>
         )
     }
