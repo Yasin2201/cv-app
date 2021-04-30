@@ -7,6 +7,8 @@ function Main() {
     return (
         <div>
             <GeneralInfo />
+            <h1>Education</h1>
+            <hr />
             <EducationInfo />
         </div >
     )

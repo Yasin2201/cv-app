@@ -52,7 +52,7 @@ class GeneralInfo extends React.Component {
     renderInfo = () => {
         return (
             <div>
-                <h2>{this.state.firstName} {this.state.secondName}</h2>
+                <h1>{this.state.firstName} {this.state.secondName}</h1>
                 <hr />
                 <h3>{this.state.email} | {this.state.phone} | {this.state.location} </h3>
                 <button onClick={this.onUpdateInfo}>Edit</button>

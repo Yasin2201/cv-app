@@ -1,90 +1,128 @@
 import React from 'react'
+import uniqid from "uniqid"
+import EducationDisplay from './EducationDisplay'
+
 
 class EducationInfo extends React.Component {
     constructor() {
         super()
 
         this.state = {
-            school: '',
-            subject: '',
-            dateFrom: '',
-            dateTo: '',
-            isEditable: false,
+            education: {
+                school: "",
+                subject: "",
+                dateTo: "",
+                dateFrom: "",
+                id: uniqid(),
+            },
+            educationArr: [],
         }
     }
 
-    handleSchoolChange = (e) => {
-        this.setState({ school: e.target.value })
-    }
-
-    handleSubjectChange = (e) => {
-        this.setState({ subject: e.target.value })
-    }
-
-    handleDateFromChange = (e) => {
-        this.setState({ dateFrom: e.target.value })
-    }
-
-    handleDateToChange = (e) => {
-        this.setState({ dateTo: e.target.value })
-    }
-
-    onUpdateEducation = (e) => {
+    handleSchoolName = (e) => {
         e.preventDefault()
-        this.setState({ isEditable: !this.state.isEditable })
+        this.setState({
+            education:
+            {
+                school: e.target.value,
+                subject: this.state.education.subject,
+                dateFrom: this.state.education.dateFrom,
+                dateTo: this.state.education.dateTo,
+                id: this.state.education.id,
+            }
+        })
     }
 
-    renderEducationInfo = () => {
-        return (
-            <div>
-                <h2>{this.state.school}</h2>
-                <h3>{this.state.subject}</h3>
-                <p>{this.state.dateFrom} - {this.state.dateTo}</p>
-                <button onClick={this.onUpdateEducation}>Edit</button>
-
-            </div>
-        )
+    handleSubjName = (e) => {
+        e.preventDefault()
+        this.setState({
+            education:
+            {
+                school: this.state.education.school,
+                subject: e.target.value,
+                dateFrom: this.state.education.dateFrom,
+                dateTo: this.state.education.dateTo,
+                id: this.state.education.id,
+            }
+        })
     }
 
-    renderEducationEditInfo = () => {
-        return (
-            <div>
-                <input type="text"
-                    id="school"
-                    placeholder="School/University"
-                    value={this.state.school}
-                    onChange={this.handleSchoolChange}
-                />
-
-                <input type="text"
-                    id="subject"
-                    placeholder="Subject"
-                    value={this.state.subject}
-                    onChange={this.handleSubjectChange}
-                />
-
-                <input type="date"
-                    id="dateFrom"
-                    placeholder="Date From"
-                    value={this.state.dateFrom}
-                    onChange={this.handleDateFromChange}
-                />
-
-                <input type="date"
-                    id="dateTo"
-                    placeholder="Date To"
-                    value={this.state.dateTo}
-                    onChange={this.handleDateToChange}
-                />
-                <button onClick={this.onUpdateEducation}>Submit</button>
-            </div>
-        )
+    handleDateFrom = (e) => {
+        e.preventDefault()
+        this.setState({
+            education:
+            {
+                school: this.state.education.school,
+                subject: this.state.education.subject,
+                dateFrom: e.target.value,
+                dateTo: this.state.education.dateTo,
+                id: this.state.education.id,
+            }
+        })
     }
 
+    handleDateTo = (e) => {
+        e.preventDefault()
+        this.setState({
+            education:
+            {
+                school: this.state.education.school,
+                subject: this.state.education.subject,
+                dateFrom: this.state.education.dateFrom,
+                dateTo: e.target.value,
+                id: this.state.education.id,
+            }
+        })
+    }
+
+    submitEducation = (e) => {
+        e.preventDefault()
+        this.setState({
+            educationArr: this.state.educationArr.concat(this.state.education),
+            education: {
+                school: "",
+                subject: "",
+                dateTo: "",
+                dateFrom: "",
+                id: uniqid(),
+            }
+        })
+    }
+
+    editEducation = (e) => {
+        e.preventDefault()
+        const foundEducation = this.state.educationArr.find((edu) => { return edu.id === e.target.value })
+
+        this.setState({ educationArr: this.state.educationArr.filter((edu) => { return edu.id !== e.target.value }) })
+
+        this.setState({
+            education:
+            {
+                school: foundEducation.school,
+                subject: foundEducation.subject,
+                dateFrom: foundEducation.dateFrom,
+                dateTo: foundEducation.dateTo,
+                id: foundEducation.id,
+            }
+        })
+    }
 
     render() {
+        console.log(this.state)
         return (
-            this.state.isEditable ? this.renderEducationInfo() : this.renderEducationEditInfo()
+            <div>
+                <form onSubmit={this.submitEducation}>
+                    <input type="text" id="school" placeholder="School/University" value={this.state.education.school} onChange={this.handleSchoolName} />
+                    <input type="text" id="subject" placeholder="Subject" value={this.state.education.subject} onChange={this.handleSubjName} />
+                    <input type="date" id="dateFrom" value={this.state.education.dateFrom} onChange={this.handleDateFrom} />
+                    <input type="date" id="dateTo" value={this.state.education.dateTo} onChange={this.handleDateTo} />
+                    <button type="submit">Submit</button>
+                </form>
+
+                <EducationDisplay education={this.state}
+                    edit={this.editEducation}
+                />
+            </div>
         )
     }
 }
