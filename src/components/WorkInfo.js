@@ -99,6 +99,24 @@ class WorkInfo extends React.Component {
         })
     }
 
+    editWork = (e) => {
+        e.preventDefault()
+
+        const foundWork = this.state.workArr.find((job) => { return job.id === e.target.value })
+        this.setState({ workArr: this.state.workArr.filter((job) => { return job.id !== e.target.value }) })
+
+        this.setState({
+            work: {
+                company: foundWork.company,
+                position: foundWork.position,
+                tasks: foundWork.tasks,
+                dateFrom: foundWork.dateFrom,
+                dateTo: foundWork.dateTo,
+                id: foundWork.id,
+            },
+        })
+    }
+
     render() {
         return (
             <div>
@@ -110,7 +128,11 @@ class WorkInfo extends React.Component {
                     <input type="date" id="dateTo" placeholder="Date To" value={this.state.work.dateTo} onChange={this.handleDateTo} />
                     <button type="submit">Submit</button>
                 </form>
-                <WorkDisplay work={this.state} />
+
+                <WorkDisplay
+                    work={this.state}
+                    edit={this.editWork}
+                />
             </div>
         )
     }

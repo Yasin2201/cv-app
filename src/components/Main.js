@@ -7,6 +7,13 @@ import WorkInfo from './WorkInfo'
 function Main() {
     return (
         <div>
+            <div className="header">
+                <h1>CV Application</h1>
+                <hr />
+            </div>
+
+            <h1>General Information</h1>
+            <hr />
             <GeneralInfo />
             <h1>Education</h1>
             <hr />

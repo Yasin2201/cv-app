@@ -10,6 +10,7 @@ const WorkDisplay = (props) => {
                         <h2>{job.position}</h2>
                         <span>{job.tasks}</span>
                         <h3>From: {job.dateFrom} - To: {job.dateTo}</h3>
+                        <button value={job.id} onClick={props.edit}>Edit</button>
                     </div>
                 )
             })}
