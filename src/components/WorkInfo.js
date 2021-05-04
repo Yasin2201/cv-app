@@ -124,8 +124,8 @@ class WorkInfo extends React.Component {
                     <input type="text" id="company" placeholder="Company Name" value={this.state.work.company} onChange={this.handleCompanyName} />
                     <input type="text" id="postion" placeholder="Job Title" value={this.state.work.position} onChange={this.handlePosition} />
                     <textarea type="text" id="tasks" placeholder="Tasks" value={this.state.work.tasks} onChange={this.handleTasks} />
-                    <input type="date" id="dateFrom" placeholder="Date From" value={this.state.work.dateFrom} onChange={this.handleDateFrom} />
-                    <input type="date" id="dateTo" placeholder="Date To" value={this.state.work.dateTo} onChange={this.handleDateTo} />
+                    <input type="date" id="workDateFrom" placeholder="Date From" value={this.state.work.dateFrom} onChange={this.handleDateFrom} />
+                    <input type="date" id="workDateTo" placeholder="Date To" value={this.state.work.dateTo} onChange={this.handleDateTo} />
                     <button type="submit">Submit</button>
                 </form>
 

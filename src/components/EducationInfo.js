@@ -114,8 +114,8 @@ class EducationInfo extends React.Component {
                 <form onSubmit={this.submitEducation}>
                     <input type="text" id="school" placeholder="School/University" value={this.state.education.school} onChange={this.handleSchoolName} />
                     <input type="text" id="subject" placeholder="Subject" value={this.state.education.subject} onChange={this.handleSubjName} />
-                    <input type="date" id="dateFrom" value={this.state.education.dateFrom} onChange={this.handleDateFrom} />
-                    <input type="date" id="dateTo" value={this.state.education.dateTo} onChange={this.handleDateTo} />
+                    <input type="date" id="eduDateFrom" value={this.state.education.dateFrom} onChange={this.handleDateFrom} />
+                    <input type="date" id="eduDateTo" value={this.state.education.dateTo} onChange={this.handleDateTo} />
                     <button type="submit">Submit</button>
                 </form>
 
