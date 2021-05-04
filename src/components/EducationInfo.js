@@ -72,7 +72,6 @@ const EducationInfo = () => {
     const editEducation = (e) => {
         e.preventDefault()
         const foundEducation = eduArr.find((edu) => { return edu.id === e.target.value })
-        console.log(foundEducation)
         setEduArr(eduArr.filter((edu) => { return edu.id !== e.target.value }))
 
         setEduInfo({

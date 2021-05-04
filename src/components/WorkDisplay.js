@@ -3,7 +3,7 @@ import React from 'react'
 const WorkDisplay = (props) => {
     return (
         <div>
-            {props.work.workArr.map((job) => {
+            {props.work.map((job) => {
                 return (
                     <div key={job.id}>
                         <h1>{job.company}</h1>

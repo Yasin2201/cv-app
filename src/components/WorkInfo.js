@@ -1,141 +1,121 @@
-import React from 'react'
+import React, { useState } from 'react'
 import uniqid from 'uniqid'
 import WorkDisplay from './WorkDisplay'
 
-class WorkInfo extends React.Component {
-    constructor() {
-        super()
+const WorkInfo = () => {
+    const [workInfo, setWorkInfo] = useState({
+        company: "",
+        position: "",
+        tasks: "",
+        dateFrom: "",
+        dateTo: "",
+        id: uniqid(),
+    });
 
-        this.state = {
-            work: {
-                company: "",
-                position: "",
-                tasks: "",
-                dateFrom: "",
-                dateTo: "",
-                id: uniqid(),
-            },
-            workArr: [],
-        }
-    }
+    const [workArr, setWorkArr] = useState([]);
 
-    handleCompanyName = (e) => {
-        this.setState({
-            work: {
-                company: e.target.value,
-                position: this.state.work.position,
-                tasks: this.state.work.tasks,
-                dateFrom: this.state.work.dateFrom,
-                dateTo: this.state.work.dateTo,
-                id: this.state.work.id,
-            }
+    const handleCompanyName = (e) => {
+        setWorkInfo({
+            company: e.target.value,
+            position: workInfo.position,
+            tasks: workInfo.tasks,
+            dateFrom: workInfo.dateFrom,
+            dateTo: workInfo.dateTo,
+            id: workInfo.id,
         })
     }
 
-    handlePosition = (e) => {
-        this.setState({
-            work: {
-                company: this.state.work.company,
-                position: e.target.value,
-                tasks: this.state.work.tasks,
-                dateFrom: this.state.work.dateFrom,
-                dateTo: this.state.work.dateTo,
-                id: this.state.work.id,
-            }
+    const handlePosition = (e) => {
+        setWorkInfo({
+            company: workInfo.company,
+            position: e.target.value,
+            tasks: workInfo.tasks,
+            dateFrom: workInfo.dateFrom,
+            dateTo: workInfo.dateTo,
+            id: workInfo.id,
         })
     }
 
-    handleTasks = (e) => {
-        this.setState({
-            work: {
-                company: this.state.work.company,
-                position: this.state.work.position,
-                tasks: e.target.value,
-                dateFrom: this.state.work.dateFrom,
-                dateTo: this.state.work.dateTo,
-                id: this.state.work.id,
-            }
+    const handleTasks = (e) => {
+        setWorkInfo({
+            company: workInfo.company,
+            position: workInfo.position,
+            tasks: e.target.value,
+            dateFrom: workInfo.dateFrom,
+            dateTo: workInfo.dateTo,
+            id: workInfo.id,
         })
     }
 
-    handleDateFrom = (e) => {
-        this.setState({
-            work: {
-                company: this.state.work.company,
-                position: this.state.work.position,
-                tasks: this.state.work.tasks,
-                dateFrom: e.target.value,
-                dateTo: this.state.work.dateTo,
-                id: this.state.work.id,
-            }
+    const handleDateFrom = (e) => {
+        setWorkInfo({
+            company: workInfo.company,
+            position: workInfo.position,
+            tasks: workInfo.tasks,
+            dateFrom: e.target.value,
+            dateTo: workInfo.dateTo,
+            id: workInfo.id,
         })
     }
 
-    handleDateTo = (e) => {
-        this.setState({
-            work: {
-                company: this.state.work.company,
-                position: this.state.work.position,
-                tasks: this.state.work.tasks,
-                dateFrom: this.state.work.dateFrom,
-                dateTo: e.target.value,
-                id: this.state.work.id,
-            }
+    const handleDateTo = (e) => {
+        setWorkInfo({
+            company: workInfo.company,
+            position: workInfo.position,
+            tasks: workInfo.tasks,
+            dateFrom: workInfo.dateFrom,
+            dateTo: e.target.value,
+            id: workInfo.id,
         })
     }
 
-    submitWork = (e) => {
+    const submitWork = (e) => {
         e.preventDefault()
-        this.setState({
-            workArr: this.state.workArr.concat(this.state.work),
-            work: {
-                company: "",
-                position: "",
-                tasks: "",
-                dateFrom: "",
-                dateTo: "",
-                id: uniqid(),
-            }
-        })
+        setWorkInfo({
+            company: "",
+            position: "",
+            tasks: "",
+            dateFrom: "",
+            dateTo: "",
+            id: uniqid(),
+        });
+        setWorkArr(workArr.concat(workInfo));
     }
 
-    editWork = (e) => {
+
+    const editWork = (e) => {
         e.preventDefault()
 
-        const foundWork = this.state.workArr.find((job) => { return job.id === e.target.value })
-        this.setState({ workArr: this.state.workArr.filter((job) => { return job.id !== e.target.value }) })
+        const foundWork = workArr.find((job) => { return job.id === e.target.value })
+        setWorkArr(workArr.filter((job) => { return job.id !== e.target.value }))
 
-        this.setState({
-            work: {
-                company: foundWork.company,
-                position: foundWork.position,
-                tasks: foundWork.tasks,
-                dateFrom: foundWork.dateFrom,
-                dateTo: foundWork.dateTo,
-                id: foundWork.id,
-            },
+        setWorkInfo({
+            company: foundWork.company,
+            position: foundWork.position,
+            tasks: foundWork.tasks,
+            dateFrom: foundWork.dateFrom,
+            dateTo: foundWork.dateTo,
+            id: foundWork.id,
         })
     }
 
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.submitWork}>
-                    <input type="text" id="company" placeholder="Company Name" value={this.state.work.company} onChange={this.handleCompanyName} />
-                    <input type="text" id="postion" placeholder="Job Title" value={this.state.work.position} onChange={this.handlePosition} />
-                    <textarea type="text" id="tasks" placeholder="Tasks" value={this.state.work.tasks} onChange={this.handleTasks} />
-                    <input type="date" id="workDateFrom" placeholder="Date From" value={this.state.work.dateFrom} onChange={this.handleDateFrom} />
-                    <input type="date" id="workDateTo" placeholder="Date To" value={this.state.work.dateTo} onChange={this.handleDateTo} />
-                    <button type="submit">Submit</button>
-                </form>
+    return (
+        <div>
+            <form onSubmit={submitWork}>
+                <input type="text" id="company" placeholder="Company Name" value={workInfo.company} onChange={handleCompanyName} />
+                <input type="text" id="postion" placeholder="Job Title" value={workInfo.position} onChange={handlePosition} />
+                <textarea type="text" id="tasks" placeholder="Tasks" value={workInfo.tasks} onChange={handleTasks} />
+                <input type="date" id="workDateFrom" placeholder="Date From" value={workInfo.dateFrom} onChange={handleDateFrom} />
+                <input type="date" id="workDateTo" placeholder="Date To" value={workInfo.dateTo} onChange={handleDateTo} />
+                <button type="submit">Submit</button>
+            </form>
 
-                <WorkDisplay
-                    work={this.state}
-                    edit={this.editWork}
-                />
-            </div>
-        )
-    }
+            <WorkDisplay
+                work={workArr}
+                edit={editWork}
+            />
+        </div>
+    )
 }
 
 export default WorkInfo
