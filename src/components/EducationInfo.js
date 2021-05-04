@@ -1,130 +1,107 @@
-import React from 'react'
+import React, { useState } from 'react'
 import uniqid from "uniqid"
 import EducationDisplay from './EducationDisplay'
 
+const EducationInfo = () => {
+    const [eduInfo, setEduInfo] = useState({
+        school: "",
+        subject: "",
+        dateTo: "",
+        dateFrom: "",
+        id: uniqid(),
+    });
 
-class EducationInfo extends React.Component {
-    constructor() {
-        super()
+    const [eduArr, setEduArr] = useState([]);
 
-        this.state = {
-            education: {
-                school: "",
-                subject: "",
-                dateTo: "",
-                dateFrom: "",
-                id: uniqid(),
-            },
-            educationArr: [],
-        }
-    }
-
-    handleSchoolName = (e) => {
+    const handleSchoolName = (e) => {
         e.preventDefault()
-        this.setState({
-            education:
-            {
-                school: e.target.value,
-                subject: this.state.education.subject,
-                dateFrom: this.state.education.dateFrom,
-                dateTo: this.state.education.dateTo,
-                id: this.state.education.id,
-            }
+        setEduInfo({
+            school: e.target.value,
+            subject: eduInfo.subject,
+            dateFrom: eduInfo.dateFrom,
+            dateTo: eduInfo.dateTo,
+            id: eduInfo.id,
         })
     }
 
-    handleSubjName = (e) => {
+    const handleSubjName = (e) => {
         e.preventDefault()
-        this.setState({
-            education:
-            {
-                school: this.state.education.school,
-                subject: e.target.value,
-                dateFrom: this.state.education.dateFrom,
-                dateTo: this.state.education.dateTo,
-                id: this.state.education.id,
-            }
+        setEduInfo({
+            school: eduInfo.school,
+            subject: e.target.value,
+            dateFrom: eduInfo.dateFrom,
+            dateTo: eduInfo.dateTo,
+            id: eduInfo.id,
         })
     }
 
-    handleDateFrom = (e) => {
+    const handleDateFrom = (e) => {
         e.preventDefault()
-        this.setState({
-            education:
-            {
-                school: this.state.education.school,
-                subject: this.state.education.subject,
-                dateFrom: e.target.value,
-                dateTo: this.state.education.dateTo,
-                id: this.state.education.id,
-            }
+        setEduInfo({
+            school: eduInfo.school,
+            subject: eduInfo.subject,
+            dateFrom: e.target.value,
+            dateTo: eduInfo.dateTo,
+            id: eduInfo.id,
         })
     }
 
-    handleDateTo = (e) => {
+    const handleDateTo = (e) => {
         e.preventDefault()
-        this.setState({
-            education:
-            {
-                school: this.state.education.school,
-                subject: this.state.education.subject,
-                dateFrom: this.state.education.dateFrom,
-                dateTo: e.target.value,
-                id: this.state.education.id,
-            }
+        setEduInfo({
+            school: eduInfo.school,
+            subject: eduInfo.subject,
+            dateFrom: eduInfo.dateFrom,
+            dateTo: e.target.value,
+            id: eduInfo.id,
         })
     }
 
-    submitEducation = (e) => {
+    const submitEducation = (e) => {
         e.preventDefault()
-        this.setState({
-            educationArr: this.state.educationArr.concat(this.state.education),
-            education: {
-                school: "",
-                subject: "",
-                dateTo: "",
-                dateFrom: "",
-                id: uniqid(),
-            }
+        setEduInfo({
+            school: "",
+            subject: "",
+            dateTo: "",
+            dateFrom: "",
+            id: uniqid(),
         })
+        setEduArr(eduArr.concat(eduInfo))
     }
 
-    editEducation = (e) => {
+    const editEducation = (e) => {
         e.preventDefault()
-        const foundEducation = this.state.educationArr.find((edu) => { return edu.id === e.target.value })
+        const foundEducation = eduArr.find((edu) => { return edu.id === e.target.value })
+        console.log(foundEducation)
+        setEduArr(eduArr.filter((edu) => { return edu.id !== e.target.value }))
 
-        this.setState({ educationArr: this.state.educationArr.filter((edu) => { return edu.id !== e.target.value }) })
-
-        this.setState({
-            education:
-            {
-                school: foundEducation.school,
-                subject: foundEducation.subject,
-                dateFrom: foundEducation.dateFrom,
-                dateTo: foundEducation.dateTo,
-                id: foundEducation.id,
-            }
+        setEduInfo({
+            school: foundEducation.school,
+            subject: foundEducation.subject,
+            dateFrom: foundEducation.dateFrom,
+            dateTo: foundEducation.dateTo,
+            id: foundEducation.id,
         })
+        console.log(eduInfo)
+        console.log(eduArr)
     }
 
-    render() {
-        console.log(this.state)
-        return (
-            <div>
-                <form onSubmit={this.submitEducation}>
-                    <input type="text" id="school" placeholder="School/University" value={this.state.education.school} onChange={this.handleSchoolName} />
-                    <input type="text" id="subject" placeholder="Subject" value={this.state.education.subject} onChange={this.handleSubjName} />
-                    <input type="date" id="eduDateFrom" value={this.state.education.dateFrom} onChange={this.handleDateFrom} />
-                    <input type="date" id="eduDateTo" value={this.state.education.dateTo} onChange={this.handleDateTo} />
-                    <button type="submit">Submit</button>
-                </form>
+    return (
+        <div>
+            <form onSubmit={submitEducation}>
+                <input type="text" id="school" placeholder="School/University" value={eduInfo.school} onChange={handleSchoolName} />
+                <input type="text" id="subject" placeholder="Subject" value={eduInfo.subject} onChange={handleSubjName} />
+                <input type="date" id="eduDateFrom" value={eduInfo.dateFrom} onChange={handleDateFrom} />
+                <input type="date" id="eduDateTo" value={eduInfo.dateTo} onChange={handleDateTo} />
+                <button type="submit">Submit</button>
+            </form>
 
-                <EducationDisplay education={this.state}
-                    edit={this.editEducation}
-                />
-            </div>
-        )
-    }
+            <EducationDisplay
+                eduArr={eduArr}
+                edit={editEducation}
+            />
+        </div>
+    )
 }
 
 export default EducationInfo
